@@ -1,0 +1,12 @@
+Part II.B - sequence_detector (1011, overlapping, Moore) testbench
+  basic_1011       1011                                           PASS
+  overlap_1011011  1011011                                        PASS
+  all_zeros        00000000                                       PASS
+  all_ones         11111111                                       PASS
+  near_miss_1010   1010                                           PASS
+  near_miss_1110   1110                                           PASS
+  reset_mid_101    101R1011                                       PASS
+  long_mixed       11011_10011_0111011_01011_000_1011_0110_1110   PASS
+=== Summary: 88 checks, 0 error(s)
+TEST PASSED
+/mnt/project-files/Project/project_starter_pack/project_starter_pack/tb/tb_sequence_detector.sv:118: $finish called at 886000 (1ps)
