@@ -1,0 +1,30 @@
+PASS [1] ADD basic                    a=05 b=03 -> r=08 z=0 n=0 c=0 v=0
+PASS [2] ADD positive overflow        a=7f b=01 -> r=80 z=0 n=1 c=0 v=1
+PASS [3] ADD carry + zero             a=ff b=01 -> r=00 z=1 n=0 c=1 v=0
+PASS [4] ADD negative overflow        a=80 b=80 -> r=00 z=1 n=0 c=1 v=1
+PASS [5] SUB negative overflow        a=80 b=01 -> r=7f z=0 n=0 c=1 v=1
+PASS [6] SUB with borrow              a=03 b=05 -> r=fe z=0 n=1 c=0 v=0
+PASS [7] SUB zero, no borrow          a=42 b=42 -> r=00 z=1 n=0 c=1 v=0
+PASS [8] SUB positive overflow        a=7f b=ff -> r=80 z=0 n=1 c=0 v=1
+PASS [9] SUB basic, no borrow         a=10 b=01 -> r=0f z=0 n=0 c=1 v=0
+PASS [10] AND -> zero                  a=f0 b=0f -> r=00 z=1 n=0 c=0 v=0
+PASS [11] AND -> negative              a=ff b=81 -> r=81 z=0 n=1 c=0 v=0
+PASS [12] OR -> zero                   a=00 b=00 -> r=00 z=1 n=0 c=0 v=0
+PASS [13] OR -> negative               a=80 b=01 -> r=81 z=0 n=1 c=0 v=0
+PASS [14] XOR -> zero                  a=aa b=aa -> r=00 z=1 n=0 c=0 v=0
+PASS [15] XOR -> all ones              a=aa b=55 -> r=ff z=0 n=1 c=0 v=0
+PASS [16] SLT neg < pos                a=80 b=01 -> r=01 z=0 n=0 c=0 v=0
+PASS [17] SLT pos vs neg               a=01 b=80 -> r=00 z=1 n=0 c=0 v=0
+PASS [18] SLT equal                    a=01 b=01 -> r=00 z=1 n=0 c=0 v=0
+PASS [19] SLT internal ovf, c=v=0      a=7f b=80 -> r=00 z=1 n=0 c=0 v=0
+PASS [20] SLT both negative            a=fe b=ff -> r=01 z=0 n=0 c=0 v=0
+PASS [21] SLL by 0                     a=a5 b=00 -> r=a5 z=0 n=1 c=0 v=0
+PASS [22] SLL by 1, MSB drops          a=81 b=01 -> r=02 z=0 n=0 c=0 v=0
+PASS [23] SLL by 7                     a=01 b=07 -> r=80 z=0 n=1 c=0 v=0
+PASS [24] SRL by 1                     a=80 b=01 -> r=40 z=0 n=0 c=0 v=0
+PASS [25] SRL by 7                     a=80 b=07 -> r=01 z=0 n=0 c=0 v=0
+PASS [26] SRL b[7:3]!=0 (shift 1)      a=f0 b=f9 -> r=78 z=0 n=0 c=0 v=0
+PASS [27] SLL b[7:3]!=0 (shift 0)      a=81 b=08 -> r=81 z=0 n=1 c=0 v=0
+--------------------------------------------
+ALU: ALL 27 TESTS PASSED
+- tb/tb_alu8.sv:110: Verilog $finish

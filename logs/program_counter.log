@@ -1,0 +1,30 @@
+cycle  rst  red  stl  tgt  |  exp  got  | result / scenario
+---------------------------------------------------------------------------
+   1    1    0    0    00  |  00   00  | PASS  reset -> 00
+   2    0    0    0    00  |  04   04  | PASS  normal +4
+   3    0    0    0    00  |  08   08  | PASS  normal +4
+   4    0    0    0    00  |  0c   0c  | PASS  normal +4
+   5    0    0    1    00  |  0c   0c  | PASS  stall holds
+   6    0    0    1    00  |  0c   0c  | PASS  stall holds (2nd cycle)
+   7    0    1    0    40  |  40   40  | PASS  redirect -> 40
+   8    0    1    1    80  |  80   80  | PASS  redirect + stall: redirect wins
+   9    0    0    0    00  |  84   84  | PASS  normal after redirect
+        reset=1 between edges: PC still 84 (no immediate change)  | PASS
+  10    0    0    0    00  |  88   88  | PASS  reset pulse ignored by the edge
+  11    1    1    1    55  |  00   00  | PASS  reset + redirect + stall: reset wins
+  12    0    0    0    00  |  04   04  | PASS  normal after reset
+  13    1    0    1    00  |  00   00  | PASS  reset + stall: reset wins
+  14    0    0    0    00  |  04   04  | PASS  normal
+  15    1    1    0    77  |  00   00  | PASS  reset + redirect: reset wins
+  16    0    1    0    f8  |  f8   f8  | PASS  redirect -> F8
+  17    0    0    0    00  |  fc   fc  | PASS  normal F8 -> FC
+  18    0    0    0    00  |  00   00  | PASS  wraparound FC -> 00
+  19    0    0    0    00  |  04   04  | PASS  normal after wrap
+  20    0    1    1    fc  |  fc   fc  | PASS  redirect + stall -> FC
+  21    0    0    1    00  |  fc   fc  | PASS  stall at FC
+  22    0    0    0    00  |  00   00  | PASS  wrap after stall FC -> 00
+  23    0    1    0    10  |  10   10  | PASS  redirect to same target twice
+  24    0    1    0    10  |  10   10  | PASS  redirect to same target twice
+---------------------------------------------------------------------------
+PC: ALL 25 TESTS PASSED (24 clock cycles)
+- tb/tb_program_counter.sv:127: Verilog $finish

@@ -1,0 +1,28 @@
+PASS [1] reset clears R1..R7                      rst=1 we=0 R1<=00 : before 00, after 00
+PASS [2] all 8 registers read 00 after reset      both ports, R0..R7
+PASS [3] write FF to R0 is ignored                rst=0 we=1 R0<=ff : before 00, after 00
+PASS [4] write R1 = 11                            rst=0 we=1 R1<=11 : before 00, after 11
+PASS [5] write R2 = 22                            rst=0 we=1 R2<=22 : before 00, after 22
+PASS [6] write R3 = 33                            rst=0 we=1 R3<=33 : before 00, after 33
+PASS [7] write R4 = 44                            rst=0 we=1 R4<=44 : before 00, after 44
+PASS [8] write R5 = 55                            rst=0 we=1 R5<=55 : before 00, after 55
+PASS [9] write R6 = 66                            rst=0 we=1 R6<=66 : before 00, after 66
+PASS [10] write R7 = 77                            rst=0 we=1 R7<=77 : before 00, after 77
+PASS [11] read back R0..R7 on both ports           R0=00, R1=11 ... R7=77
+PASS [12] dual read R1 & R2                        port1=11 port2=22
+PASS [13] dual read R7 & R3                        port1=77 port2=33
+PASS [14] both ports read the same R5              port1=55 port2=55
+PASS [15] dual read R0 & R6 (R0 = 00)              port1=00 port2=66
+PASS [16] address changes without a clock edge     4 address pairs inside one half-period
+PASS [17] write disabled (we=0) leaves R3          rst=0 we=0 R3<=ee : before 33, after 33
+PASS [18] state retained over 5 idle cycles        all registers unchanged
+PASS [19] overwrite R3 = A5 (old 33 until edge)    rst=0 we=1 R3<=a5 : before 33, after a5
+PASS [20] write R7 = 00                            rst=0 we=1 R7<=00 : before 77, after 00
+PASS [21] back-to-back writes R1, R2               on consecutive edges: R1=c1 R2=c2
+PASS [22] reset + write R2 = BB: reset wins        rst=1 we=1 R2<=bb : before c2, after 00
+PASS [23] all registers 00 after second reset      both ports, R0..R7
+PASS [24] write after reset R4 = 4F                rst=0 we=1 R4<=4f : before 00, after 4f
+--------------------------------------------
+scenarios: 24, individual port checks: 138
+REGFILE: ALL 24 TESTS PASSED
+- tb/tb_register_file.sv:179: Verilog $finish

@@ -1,0 +1,48 @@
+=== control_unit: all 16 opcodes ===
+PASS [1] opcode=0000 (ALU-R  ) RW AS MR MW RS B J AO I = 1  0  0  0  00 0 0 10 0   (MR&MW=0 ok)
+PASS [2] opcode=0001 (ALU-I  ) RW AS MR MW RS B J AO I = 1  1  0  0  00 0 0 10 0   (MR&MW=0 ok)
+PASS [3] opcode=0010 (LOAD   ) RW AS MR MW RS B J AO I = 1  1  1  0  01 0 0 00 0   (MR&MW=0 ok)
+PASS [4] opcode=0011 (STORE  ) RW AS MR MW RS B J AO I = 0  1  0  1  00 0 0 00 0   (MR&MW=0 ok)
+PASS [5] opcode=0100 (BRANCH ) RW AS MR MW RS B J AO I = 0  0  0  0  00 1 0 01 0   (MR&MW=0 ok)
+PASS [6] opcode=0101 (JAL    ) RW AS MR MW RS B J AO I = 1  0  0  0  10 0 1 00 0   (MR&MW=0 ok)
+PASS [7] opcode=0110 (illegal) RW AS MR MW RS B J AO I = 0  0  0  0  00 0 0 00 1   (MR&MW=0 ok)
+PASS [8] opcode=0111 (illegal) RW AS MR MW RS B J AO I = 0  0  0  0  00 0 0 00 1   (MR&MW=0 ok)
+PASS [9] opcode=1000 (illegal) RW AS MR MW RS B J AO I = 0  0  0  0  00 0 0 00 1   (MR&MW=0 ok)
+PASS [10] opcode=1001 (illegal) RW AS MR MW RS B J AO I = 0  0  0  0  00 0 0 00 1   (MR&MW=0 ok)
+PASS [11] opcode=1010 (illegal) RW AS MR MW RS B J AO I = 0  0  0  0  00 0 0 00 1   (MR&MW=0 ok)
+PASS [12] opcode=1011 (illegal) RW AS MR MW RS B J AO I = 0  0  0  0  00 0 0 00 1   (MR&MW=0 ok)
+PASS [13] opcode=1100 (illegal) RW AS MR MW RS B J AO I = 0  0  0  0  00 0 0 00 1   (MR&MW=0 ok)
+PASS [14] opcode=1101 (illegal) RW AS MR MW RS B J AO I = 0  0  0  0  00 0 0 00 1   (MR&MW=0 ok)
+PASS [15] opcode=1110 (illegal) RW AS MR MW RS B J AO I = 0  0  0  0  00 0 0 00 1   (MR&MW=0 ok)
+PASS [16] opcode=1111 (illegal) RW AS MR MW RS B J AO I = 0  0  0  0  00 0 0 00 1   (MR&MW=0 ok)
+=== branch_unit: directed scenarios (branch_target=20, jump_target=60) ===
+PASS [17] BEQ equal -> taken         ctl=000 a=05 b=05 br=1 j=0 -> take=1 redir=1 tgt=20
+PASS [18] BEQ not equal              ctl=000 a=05 b=06 br=1 j=0 -> take=0 redir=0 tgt=00
+PASS [19] BNE not equal -> taken     ctl=001 a=05 b=06 br=1 j=0 -> take=1 redir=1 tgt=20
+PASS [20] BNE equal                  ctl=001 a=42 b=42 br=1 j=0 -> take=0 redir=0 tgt=00
+PASS [21] BLT -128 < 1 -> taken      ctl=010 a=80 b=01 br=1 j=0 -> take=1 redir=1 tgt=20
+PASS [22] BLT 1 < -128 ? no          ctl=010 a=01 b=80 br=1 j=0 -> take=0 redir=0 tgt=00
+PASS [23] BLT equal                  ctl=010 a=7f b=7f br=1 j=0 -> take=0 redir=0 tgt=00
+PASS [24] BLT -2 < -1 -> taken       ctl=010 a=fe b=ff br=1 j=0 -> take=1 redir=1 tgt=20
+PASS [25] BGE equal -> taken         ctl=011 a=7f b=7f br=1 j=0 -> take=1 redir=1 tgt=20
+PASS [26] BGE 127 >= -128 -> taken   ctl=011 a=7f b=80 br=1 j=0 -> take=1 redir=1 tgt=20
+PASS [27] BGE -128 >= 127 ? no       ctl=011 a=80 b=7f br=1 j=0 -> take=0 redir=0 tgt=00
+PASS [28] BLTU 1 < 128 -> taken      ctl=100 a=01 b=80 br=1 j=0 -> take=1 redir=1 tgt=20
+PASS [29] BLTU 128 < 1 ? no          ctl=100 a=80 b=01 br=1 j=0 -> take=0 redir=0 tgt=00
+PASS [30] BLTU 0 < 255 -> taken      ctl=100 a=00 b=ff br=1 j=0 -> take=1 redir=1 tgt=20
+PASS [31] BGEU 128 >= 1 -> taken     ctl=101 a=80 b=01 br=1 j=0 -> take=1 redir=1 tgt=20
+PASS [32] BGEU equal -> taken        ctl=101 a=00 b=00 br=1 j=0 -> take=1 redir=1 tgt=20
+PASS [33] BGEU 1 >= 255 ? no         ctl=101 a=01 b=ff br=1 j=0 -> take=0 redir=0 tgt=00
+PASS [34] invalid ctl 110            ctl=110 a=05 b=05 br=1 j=0 -> take=0 redir=0 tgt=00
+PASS [35] invalid ctl 111            ctl=111 a=05 b=05 br=1 j=0 -> take=0 redir=0 tgt=00
+PASS [36] branch disabled (BEQ true) ctl=000 a=05 b=05 br=0 j=0 -> take=0 redir=0 tgt=00
+PASS [37] jump only                  ctl=000 a=05 b=06 br=0 j=1 -> take=0 redir=1 tgt=60
+PASS [38] jump + branch taken        ctl=000 a=05 b=05 br=1 j=1 -> take=1 redir=1 tgt=60
+PASS [39] jump + branch not taken    ctl=001 a=05 b=05 br=1 j=1 -> take=0 redir=1 tgt=60
+PASS [40] jump + invalid ctl         ctl=111 a=00 b=00 br=1 j=1 -> take=0 redir=1 tgt=60
+PASS [41] nothing requested          ctl=001 a=01 b=02 br=0 j=0 -> take=0 redir=0 tgt=00
+=== boundary sweep (8 controls x 6 x 6 values): 288 checks, 0 failures ===
+--------------------------------------------
+checks: 16 opcodes + 25 directed branch scenarios + 288 sweep
+CONTROL/BRANCH: ALL 329 TESTS PASSED
+- tb/tb_control_branch.sv:199: Verilog $finish
