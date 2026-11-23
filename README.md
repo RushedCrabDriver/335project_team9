@@ -1,3 +1,14 @@
+FOR PART 1.
+# Run from project_starter_pack/ in WSL (Ubuntu 24.04).
+# Needs: verilator 5.020, make, g++  (sudo apt install verilator make build-essential)
+# Outputs: logs/*.log (one log per testbench).
+make clean
+make all
+# runs tb_alu8, tb_control_branch, tb_program_counter, tb_register_file, then mutant A and B
+# expected at the end: RESULT: PASS, mutant A: DETECTED, mutant B: DETECTED
+# one testbench only: make alu / make control_branch / make pc / make regfile
+# with icarus instead of verilator: make all SIM=iverilog
+
 FOR PART 2.
 
 **\# Outputs: sim/part2.log and sim/part2\_timing.csv (timing table).**
