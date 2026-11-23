@@ -1,0 +1,12 @@
+=== Fault A: reference alu8 ===
+SLT a=0x80 (-128) b=0x01 (+1): expected result=0x01, actual result=0x01
+PASS: fault A not detected (design correct)
+=== Fault A: MUTANT A ===
+SLT a=0x80 (-128) b=0x01 (+1): expected result=0x01, actual result=0x00
+FAIL: fault A DETECTED
+=== Fault B: reference PC ===
+stall=1 redirect=1 target=0x20 (pc was 0x04): expected pc=0x20, actual pc=0x20
+PASS: fault B not detected (design correct)
+=== Fault B: MUTANT B ===
+stall=1 redirect=1 target=0x20 (pc was 0x04): expected pc=0x20, actual pc=0x04
+FAIL: fault B DETECTED
